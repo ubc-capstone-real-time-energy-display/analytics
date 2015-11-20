@@ -7,6 +7,7 @@ This code is for getting a rough idea of how much energy is used at UBC. This pr
 This project is written in Python 2. 
 
 It depends on:
+
 1. matplotlib
 2. MySQLdb
 
