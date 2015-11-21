@@ -3,7 +3,7 @@ import datetime
 import database
 
 ##
-# USAGE:  python data-populate.py [BUILDING NAME] [PATH TO DATA FILE]
+# USAGE:  python populate.py [BUILDING NAME] [PATH TO DATA FILE]
 #
 # Data file in the format: 
 # DATE (2014-Jan-01 HH:MM:SS.000),DEMAND (XX.XXX),NET (XX.XXX)
