@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import database
+import util.database as database
 import sys
 
 db = database.connect()

@@ -1,6 +1,6 @@
 import sys
 import datetime 
-import database
+import util.database as database
 
 ##
 # USAGE:  python populate.py [BUILDING NAME] [PATH TO DATA FILE]
