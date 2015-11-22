@@ -17,9 +17,8 @@ Use pip to install the dependencies.
 
 ## Database
 
-1. Create a new user (see database.py for credentials)
-2. Create a new database called 'capstone'
-3. Import the database dump into the new database
+1. Create a new user (see util/database.py for credentials)
+2. Run `python init.py` to create and seed the database
 
 # Usage
 
@@ -30,6 +29,7 @@ python populate.py [building name] [csv file path]
 ```
 
 Modify analyze.py to run queries
+
 ```
 python analyze.py
 ```

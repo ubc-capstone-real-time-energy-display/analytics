@@ -1,6 +1,6 @@
 import sys
 import datetime 
-import util.database as database
+import database
 
 ##
 # USAGE:  python populate.py [BUILDING NAME] [PATH TO DATA FILE]
@@ -8,6 +8,8 @@ import util.database as database
 # Data file in the format: 
 # DATE (2014-Jan-01 HH:MM:SS.000),DEMAND (XX.XXX),NET (XX.XXX)
 ##
+
+database_name = "capstone"
 
 def checkBuildingId(c, building):
     # See if building is already in database
@@ -49,24 +51,31 @@ def getDataFromFile(bid, filename):
 
     return data
 
+# Populate!
+def populate(building, data_file):
+    # Connect to DB
+    db = database.connect(database_name)
+    c = db.cursor()
+
+    # Main
+    bid = getBuildingId(c, building);
+    data = getDataFromFile(bid, data_file)
+
+    n = 0
+    # Insert each line into the database
+    for line in data:
+        n += c.execute("INSERT INTO energy_data (bid, timestamp, demand, net) VALUES (%s, %s, %s, %s)", line)
+
+    print "Added %s: %s" % (building, data_file)
+    print "Added %s rows" % n
+    db.commit()
+    
 
 
-# Get program arguments: populate.py building datafile
-building = sys.argv[1]
-data_file = sys.argv[2]
+if __name__ == '__main__':
+    # Get program arguments: populate.py building datafile
+    building = sys.argv[1]
+    data_file = sys.argv[2]
 
-# Connect to DB
-db = database.connect()
-c = db.cursor()
+    populate(building, data_file)
 
-# Main
-bid = getBuildingId(c, building);
-data = getDataFromFile(bid, data_file)
-
-n = 0
-# Insert each line into the database
-for line in data:
-    n += c.execute("INSERT INTO energy_data (bid, timestamp, demand, net) VALUES (%s, %s, %s, %s)", line)
-
-print n
-db.commit()

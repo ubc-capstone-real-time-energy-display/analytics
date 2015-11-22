@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import util.database as database
 import sys
 
-db = database.connect()
+db = database.connect("capstone")
 c = db.cursor()
 
 def buildPlotData(rows):
