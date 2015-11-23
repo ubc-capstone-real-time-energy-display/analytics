@@ -1,6 +1,7 @@
 import sys
 import datetime 
 import database
+from dateutil.parser import parse
 
 ##
 # USAGE:  python populate.py [BUILDING NAME] [PATH TO DATA FILE]
@@ -44,8 +45,9 @@ def getDataFromFile(bid, filename):
         time, demand, net = line.strip().split(",")
 
         # Convert time to datetime object
-        time = datetime.datetime.strptime(time, "%Y-%b-%d %H:%M:%S.%f")
-        time = datetime.datetime.strftime(time, "%Y-%m-%d %H:%M:%S")
+        time = parse(time)
+        #time = datetime.datetime.strptime(time, "%Y-%b-%d %H:%M:%S.%f")
+        #time = datetime.datetime.strftime(time, "%Y-%m-%d %H:%M:%S")
 
         data.append((bid, time, demand, net))
 
@@ -62,13 +64,18 @@ def populate(building, data_file):
     data = getDataFromFile(bid, data_file)
 
     n = 0
+    skippedlines = 0
     # Insert each line into the database
     for line in data:
-        n += c.execute("INSERT INTO energy_data (bid, timestamp, demand, net) VALUES (%s, %s, %s, %s)", line)
+        try:
+            n += c.execute("INSERT INTO energy_data (bid, timestamp, demand, net) VALUES (%s, %s, %s, %s)", line)
+        except Exception, msg:
+            skippedlines += 1
 
+    db.commit()
     print "Added %s: %s" % (building, data_file)
     print "Added %s rows" % n
-    db.commit()
+    print "Skipped %s lines" % (skippedlines)
     
 
 
