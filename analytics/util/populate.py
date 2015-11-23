@@ -1,3 +1,4 @@
+import os
 import sys
 import datetime 
 import database
@@ -20,6 +21,7 @@ def checkBuildingId(c, building):
         return c.fetchone()[0]
     else:
         return -1
+
 
 # Check if building is already in database and get its id
 # Otherwise create a new entry
@@ -80,9 +82,20 @@ def populate(building, data_file):
 
 
 if __name__ == '__main__':
-    # Get program arguments: populate.py building datafile
-    building = sys.argv[1]
-    data_file = sys.argv[2]
+    if len(sys.argv) < 3:
+        print "Incorrect usage: python populate.py [ buildingname ] [ data_file | directory ]"
+    else:
+        # Get program arguments: populate.py building datafile
+        building = sys.argv[1]
+        data_file = sys.argv[2]
 
-    populate(building, data_file)
-
+        # data_file may be a directory. Is so, populate recursively
+        if os.path.isdir(data_file):
+            for root, subdir, files in os.walk(data_file):
+                for f in files:
+                    # We only care about csv files
+                    if f.split(".")[-1] == "csv":
+                        data_file = os.path.join(root, f)
+                        populate(building, data_file)
+        else:
+            populate(building, data_file)
