@@ -4,6 +4,7 @@ import util.database as database
 from util.building import getbid
 import sys
 import datetime
+from dateutil.relativedelta import relativedelta
 
 def buildPlotData(rows):
     x = []
@@ -52,7 +53,7 @@ if __name__ == '__main__':
             yearstop = start + datetime.timedelta(days=364*year)
 
             # Generate label
-            label = str(yearstart.year)
+            label = str((start + relativedelta(years=(year-1))).year)
 
             # Array of days in the year
             days = []
