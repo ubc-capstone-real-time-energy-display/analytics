@@ -22,7 +22,6 @@ if __name__ == '__main__':
         with open(filename, 'r') as f:
             filedata.append(f.readline())
             for line in f:
-                print line
                 filedata.append(swap(line))
 
         with open(filename, 'w') as f:
