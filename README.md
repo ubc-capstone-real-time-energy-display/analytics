@@ -22,14 +22,19 @@ Use pip to install the dependencies.
 
 # Usage
 
-Use this command to insert data into the database
+## New Data
+Use this command to insert new data (after seeding) into the database
 
 ```
 python populate.py [building name] [csv file path]
 ```
 
-Modify analyze.py to run queries
+## Overview
+Use `python overview.py [building name]` to see the all the data available for the building
+
+## Metrics
+Try different metrics using:
 
 ```
-python analyze.py
+python visualize.py [metric] [buildingname] [date (YYYY-MM-DD)]
 ```

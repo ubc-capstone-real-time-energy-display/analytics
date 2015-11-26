@@ -66,18 +66,25 @@ def populate(building, data_file):
     data = getDataFromFile(bid, data_file)
 
     n = 0
-    skippedlines = 0
+    numskippedlines = 0
+    skippedlines = []
     # Insert each line into the database
+    i = 0
     for line in data:
+        i += 1
         try:
             n += c.execute("INSERT INTO energy_data (bid, timestamp, demand, net) VALUES (%s, %s, %s, %s)", line)
         except Exception, msg:
-            skippedlines += 1
+            numskippedlines += 1
+            skippedlines.append((i, msg))
 
     db.commit()
     print "Added %s: %s" % (building, data_file)
     print "Added %s rows" % n
-    print "Skipped %s lines" % (skippedlines)
+    print "Skipped %s lines" % (numskippedlines)
+
+    if numskippedlines > 0:
+        print skippedlines
     
 
 
