@@ -38,13 +38,6 @@ def _gethistoricalaverage(bid, thisyearstart):
     return [sum(x) / len(x) for x in zip(*datasets)]
 
 
-if __name__ == '__main__':
-    bid = util.building.getbid('kenny')
-    start = parse('2015-03-10')
-    avg = _gethistoricalaverage(bid, start)
-    print avg
-
-
 """
 This metric works by averaging all historical data on this day and comparing that to the target day
 
