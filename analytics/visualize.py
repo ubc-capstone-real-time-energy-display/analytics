@@ -33,22 +33,22 @@ def _plotday(metric, title, x, y_day, y_calculated, y):
 
     plt.show()
 
+
 def visualize(metric, buildingname, date):
     bid = util.building.getbid(buildingname)
 
     try:
         # Load the metric and run it
         run = _loadmetric(metric)
-        print 'load'
         x, y_day, y_calculated, y_visual = run(bid, date)
 
         # Plot
         datetime = parse(date)
         title = "%s: %s [red=today, green=metric]" % (buildingname, datetime.strftime("%b %d, %Y (%a)"))
+
         _plotday(metric, title, x, y_day, y_calculated, y_visual)
     except Exception, msg:
         print msg
-
 
 
 if __name__ == '__main__':
