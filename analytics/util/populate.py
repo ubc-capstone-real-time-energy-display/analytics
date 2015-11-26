@@ -48,8 +48,6 @@ def getDataFromFile(bid, filename):
 
         # Convert time to datetime object
         time = parse(time)
-        #time = datetime.datetime.strptime(time, "%Y-%b-%d %H:%M:%S.%f")
-        #time = datetime.datetime.strftime(time, "%Y-%m-%d %H:%M:%S")
 
         data.append((bid, time, demand, net))
 
