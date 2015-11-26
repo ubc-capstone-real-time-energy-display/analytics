@@ -14,8 +14,10 @@ def _loadmetric(metric):
     return run
     
 
-def _plotday(title, x, y_day, y_calculated, y):
+def _plotday(metric, title, x, y_day, y_calculated, y):
     f, axarr = plt.subplots(2, sharex=True)
+
+    f.canvas.set_window_title(metric)
 
     # Subplot A: Separate data
     axarr[0].set_title(title)
@@ -37,14 +39,16 @@ def visualize(metric, buildingname, date):
     try:
         # Load the metric and run it
         run = _loadmetric(metric)
+        print 'load'
         x, y_day, y_calculated, y_visual = run(bid, date)
-    except Exception:
-        print 'Unable to run or load metric: %s' % (metric,)
 
-    # Plot
-    datetime = parse(date)
-    title = "%s: %s [red=today, green=metric]" % (buildingname, datetime.strftime("%b %d, %Y (%a)"))
-    _plotday(title, x, y_day, y_calculated, y_visual)
+        # Plot
+        datetime = parse(date)
+        title = "%s: %s [red=today, green=metric]" % (buildingname, datetime.strftime("%b %d, %Y (%a)"))
+        _plotday(metric, title, x, y_day, y_calculated, y_visual)
+    except Exception, msg:
+        print msg
+
 
 
 if __name__ == '__main__':
