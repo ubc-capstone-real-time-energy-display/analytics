@@ -83,7 +83,6 @@ if __name__ == '__main__':
             label, y = y_data
             plt.plot(x, y, label=label)
 
-        # Remove year from x axis
         plt.ylabel("avg kW/15mins")
         plt.xlabel("Date")
         plt.legend(loc='best')
